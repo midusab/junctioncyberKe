@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blue: #007AFF;
+  --color-brand-deep: #0042A5;
+  --color-semantic-red: #FF3B30;
+  --color-semantic-amber: #FF9F0A;
+  --color-semantic-green: #34C759;
+  --font-sans: "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", monospace;
+  --animate-dash: dash 30s linear infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes dash {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: 1000; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; filter: brightness(1); }
+  50% { opacity: 0.8; filter: brightness(1.2); }
+}
+
+@layer base {
+  body {
+    @apply bg-[#FBFBFD] text-[#1D1D1F] antialiased selection:bg-brand-blue/10 overflow-x-hidden relative;
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  /* Typography Scale according to Liquid Standard */
+  h1 { @apply text-4xl md:text-7xl font-bold tracking-tight; line-height: 1.1; }
+  h2 { @apply text-3xl md:text-5xl font-bold tracking-tight; line-height: 1.2; }
+  h3 { @apply text-xl md:text-2xl font-bold tracking-tight; }
+  p { @apply text-base md:text-lg; max-width: 65ch; }
+
+  body::before {
+    content: "";
+    @apply fixed inset-0 -z-50 opacity-[0.03] pointer-events-none;
+    background-image: url("https://www.transparenttextures.com/patterns/pinstriped-suit.png");
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply relative overflow-hidden rounded-[32px] border border-white/40 bg-white/40 backdrop-blur-[32px] transition-all duration-500;
+    box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.05), 0 2px 8px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .btn-primary {
+    @apply flex items-center justify-center gap-2 rounded-full bg-brand-blue px-8 py-4 font-bold text-white shadow-lg transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .btn-secondary {
+    @apply flex items-center justify-center gap-2 rounded-full bg-[#1D1D1F] px-8 py-4 font-bold text-white shadow-lg transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .tabular-numbers {
+    font-variant-numeric: tabular-nums;
+    font-family: var(--font-mono);
+  }
+
+  .glass-card::before {
+    content: "";
+    @apply absolute inset-0 -z-10 bg-gradient-to-br from-white/60 to-white/10 opacity-50;
+  }
+
+  .glass-card::after {
+    content: "";
+    @apply absolute inset-0 -z-10 rounded-[32px] border border-white/60 pointer-events-none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.1) 100%);
+  }
+
+  .mesh-gradient {
+    background: radial-gradient(at 0% 0%, hsla(220,100%,95%,1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(260,100%,95%,1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(20,100%,95%,1) 0, transparent 50%),
+                radial-gradient(at 50% 50%, hsla(240,100%,98%,1) 0, transparent 50%),
+                radial-gradient(at 0% 100%, hsla(220,100%,92%,1) 0, transparent 50%),
+                radial-gradient(at 100% 100%, hsla(260,100%,92%,1) 0, transparent 50%);
+    background-color: #fbfbfd;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px rgba(0, 122, 255, 0.5);
+  }
+
+  .lensing-effect {
+    mask-image: radial-gradient(circle at center, black 0%, transparent 100%);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+
+  .animate-shake {
+    animation: shake 0.2s ease-in-out 0s 2;
+  }
+
+  .ease-expo {
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Liquid Glass Toastify Overrides */
+.Toastify__toast {
+  background: rgba(255, 255, 255, 0.4) !important;
+  backdrop-filter: blur(24px) saturate(150%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(150%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 40px -10px rgba(0, 122, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+  color: #1D1D1F !important;
+  font-family: var(--font-sans) !important;
+  padding: 12px 16px !important;
+  overflow: hidden;
+}
+
+.Toastify__toast-theme--dark {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 10px 40px -10px rgba(0, 122, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  color: #FFFFFF !important;
+}
+
+/* Add an internal specular reflection highlight that shifts */
+.Toastify__toast::before {
+  content: "";
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: liquid-shine 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes liquid-shine {
+  0% { left: -100%; opacity: 0; }
+  50% { opacity: 1; }
+  100% { left: 200%; opacity: 0; }
+}
+
+.Toastify__toast-body {
+  font-weight: 700 !important;
+  font-size: 0.875rem !important;
+  letter-spacing: -0.02em !important;
+  margin: 0 !important;
+  padding: 0 8px !important;
+}
+
+.Toastify__progress-bar {
+  background: linear-gradient(90deg, #007AFF, #0042A5) !important;
+  height: 3px !important;
+  border-radius: 0 0 20px 20px !important;
+}
+
+.Toastify__close-button {
+  color: inherit !important;
+  opacity: 0.4 !important;
+  transition: opacity 0.2s ease !important;
+  align-self: center !important;
+}
+
+.Toastify__close-button:hover {
+  opacity: 1 !important;
+}
